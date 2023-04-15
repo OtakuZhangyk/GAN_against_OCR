@@ -1,0 +1,7 @@
+corpus:
+"The Lottery" by Shirley Jackson
+"The Yellow Wallpaper" by Charlotte Perkins Gilman
+"The Cask of Amontillado" by Edgar Allan Poe
+"Stopping by Woods on a Snowy Evening" by Robert Frost
+"I Have a Dream" by Martin Luther King Jr.
+"The United States Constitution"
