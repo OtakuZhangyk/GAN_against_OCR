@@ -3,11 +3,13 @@ from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 
 # Define the image size and text parameters
-img_size = (1080, 50)
+img_size = (1024, 49)
 font_size = 24
 font_color = (0, 0, 0)  # Black
 bg_color = (255, 255, 255)  # White
 max_words_per_image = 12
+
+floder_name = 'img49_1024'
 
 # Open text file and read lines
 with open('texts.txt', 'r', encoding='utf-8') as file:
@@ -54,7 +56,7 @@ for i in range(0, len(words), max_words_per_image):
     # Convert the image from RGB to grayscale
     gray_img = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
 
-    img_filename = f'./img/{i//max_words_per_image}.png'
+    img_filename = f'./{floder_name}/{i//max_words_per_image}.png'
     
     cv2.imwrite(img_filename, gray_img)
 
@@ -62,5 +64,5 @@ for i in range(0, len(words), max_words_per_image):
     #exit()
     out_txt += text + '\n'
 
-with open('./img/splitted_text.txt', 'w', encoding='utf-8') as file:
+with open(f'./{floder_name}/splitted_text.txt', 'w', encoding='utf-8') as file:
     file.write(out_txt)
