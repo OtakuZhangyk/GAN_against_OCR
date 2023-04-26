@@ -1,15 +1,28 @@
 import cv2
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
+import re
+
+# Example string
+my_string = "This is a test string with, non-English chars: 漢字, ひらがな and a number: 123.4"
+
+# Use regular expressions to remove non-alphabetic characters, spaces, commas, and dots
+pattern = re.compile('[^a-zA-Z\s,.0-9]')
+my_string = pattern.sub('', my_string)
+
+# Print the cleaned string
+print(my_string)
+exit()
 
 # Define the image size and text parameters
-img_size = (1024, 49)
-font_size = 24
+img_size = (1024, 64)
+font_size = 26
 font_color = (0, 0, 0)  # Black
 bg_color = (255, 255, 255)  # White
-max_words_per_image = 12
+max_chrs_per_image = 70
 
-floder_name = 'img49_1024'
+floder_name = 'img64_1024_1'
+
 
 # Open text file and read lines
 with open('texts.txt', 'r', encoding='utf-8') as file:
@@ -25,12 +38,14 @@ for line in lines:
 
 out_txt = ''
 
-# Create images with 10-20 words per image
-for i in range(0, len(words), max_words_per_image):
-    # Get words for this image
-    image_words = words[i:i+max_words_per_image]
-    text = ' '.join(image_words)
-
+text = ''
+img_num = 0
+while words:
+    w = words.pop(0)
+    while len(text) + len(w) < 70:
+        text += ' ' + w
+        w = words.pop(0)
+    new_text = w
 
     # Create a blank image
     img = Image.new('RGB', img_size, color=bg_color)
@@ -56,13 +71,16 @@ for i in range(0, len(words), max_words_per_image):
     # Convert the image from RGB to grayscale
     gray_img = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
 
-    img_filename = f'./{floder_name}/{i//max_words_per_image}.png'
+    img_filename = f'./{floder_name}/{img_num}.png'
     
     cv2.imwrite(img_filename, gray_img)
 
     print(f'Saved image {img_filename}')
     #exit()
     out_txt += text + '\n'
+
+    img_num += 1
+    text = new_text
 
 with open(f'./{floder_name}/splitted_text.txt', 'w', encoding='utf-8') as file:
     file.write(out_txt)
