@@ -110,7 +110,7 @@ def img_sim(image1, image2 = None, algo = 'Non0'):
 # evaluate the performance of the generator on each pair of real and fake image
 def evaluate(real_np, real_time, fake_np, fake_time, img_sim):
     # Define the weights for each factor
-    w_str_sim = 1.0
+    w_str_sim = 0.92
     w_confidence = 0
     #w_time = 0.0
     w_img_sim = 0.08

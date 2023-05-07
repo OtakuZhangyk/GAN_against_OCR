@@ -2,11 +2,13 @@ from PIL import Image
 import pytesseract
 import pandas as pd
 from io import StringIO
+import numpy as np
+from math import sqrt
 
 from GAN import load_data
 
 img_filename0 = './res/0-0.png'
-img_filename1 = './res/0-1.png'
+img_filename1 = './res/0-2.png'
 
 #data,lines = load_data()
 tsv_string = pytesseract.image_to_data(Image.open(img_filename0), config = 'tsv')
@@ -48,4 +50,17 @@ print(result_np_array)
 tsv_string = pytesseract.image_to_string(Image.open(img_filename1))
 
 print(tsv_string)
+
+image0 = np.array(Image.open(img_filename0))
+image1 = np.array(Image.open(img_filename1))
+image1 -= image0
+image1 = abs(image1)
+img = (image1 / 127.5) - 1
+img = img.flatten()
+dist = abs(np.linalg.norm(img))
+print(sqrt(dist) - 1.2)
+
+
+
+
 
